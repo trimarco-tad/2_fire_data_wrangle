@@ -18,10 +18,10 @@ knitr::opts_knit$set(root.dir='..')
 ```
 
 
-```{r dataread, warning=F,message=F}
+```{r dataread, warning=FALSE,message=FALSE}
 ####-----Reading in Data and Stacking it ----- ####
 #Reading in files
-files <- list.files('../data',full.names=T)
+files <- list.files('data',full.names=T)
 
 
 #Read in individual data files
@@ -66,7 +66,7 @@ full_wide <- spread(data=full_long,key='data',value='value') %>%
 
 summer_only <- filter(full_wide,month %in% c(6,7,8,9))
 
-
+#Figure 1
 ggplot(summer_only,aes(x=ndmi,y=ndvi,color=site)) + 
   geom_point() + 
   theme_few() + 
@@ -74,6 +74,9 @@ ggplot(summer_only,aes(x=ndmi,y=ndvi,color=site)) +
   theme(legend.position=c(0.8,0.8))
 ```
 
+Figure 1. 
+
+There is a strong direct positive correlation between NDMI and NDVI. This isn't surprising, we should expect that time periods with more moisture have the greater potential to support vegetation. It is also worth noting that, unsurprisingly, NDVI is generally higher for the unburned region than the burned region, but the NDMI is also greater in the unburned region, indicating some soil moisture holding potential.
 
 ## Question 2 
 
@@ -97,16 +100,20 @@ sum_aug <- summer_only %>%
 
 sum_2 <- inner_join(x = sum_aug, y = sum_jan, by = "year-site")
 
+#Figure 2
 ggplot(sum_2,aes(x=mean_ndsi,y=mean_ndvi,color=site.x)) + 
   geom_point() + 
   theme_few() + 
   scale_color_few() + 
-  theme(legend.position=c(0.8,0.8))
+  theme(legend.position=c(0.8,0.2))
  
 
 
 ```
 
+Figure 2.
+
+There is generally a poor correlation between NDSI and NDVI throughout the years, particularly for the burned sites. This makes sense intuitively, because while NDSI can reflect how much snow is accumulated on the ground, it happens months ahead of the productive vegetative season. A number of other factors influence how much this snow will support later vegetative growth, including snow depth, summer moisture, and whether or not the site is burned and even has vegetation to use the stored soil moisture. Notably, there does seem to be two "groupings" of burned NDSI vs NDVI values, perhaps indicating the impact of the fire on driving down NDVI values along the same NDSI value range.
 
 ## Q3
 
@@ -120,17 +127,20 @@ sum_3 <- sum_2 %>%
   select(-c("year-site","year.y","site.y","fire"))
 
 
-
+#Figure 3
 ggplot(sum_3,aes(x=mean_ndsi,y=mean_ndvi,color=fire_site)) + 
   geom_point() + 
   theme_few() + 
   scale_color_few() + 
-  theme(legend.position=c(0.8,0.8))
+  theme(legend.position=c(0.8,0.2))
   
 ```
 
+Figure 3.
 
 The overall lack of a significant trend is observable in both the burned and unburned plots, though there is a slightly tighter trend between NDVI and NDSI in the unburned plots, if we ignore the year (probably not wise). The only noticeable difference is that the burned plots have a wider variance in year-to-year NDVI across the same NDSI, when compared against plots that either never burn or haven't burned yet. This makes sense intuitively, extra moisture is likely to have a bigger impact on sites that actually have the vegetation to utilize it.
+
+The correlation between NDSI and NDVI is weaker than that of NDMI and NDVI. Intuitively, this makes sense. NDMI values from Figure 2 are from the same time period as the NDVI values, whereas the NDSI values in Figure 3 come from the earlier winter months and more represent the "potential" for moisture that can be stored in soil and used later. NDMI values are a representation of the actual moisture available to the plants during the growing season, so we should expect to see a stronger correlation between NDMI and NDVI here.
 
 ## Question 4
 
@@ -145,7 +155,7 @@ greenest <- slice_max(sum_full, ndvi_mon)
 greenest
 ```
 
-August is the greenest on average
+August is the greenest on average.
 
 ## Question 5) 
 
@@ -158,10 +168,6 @@ snowiest
 January is the snowiest month on average.
 
 
-## Bonus Question: Redo all problems with `spread` and `gather` using modern tidyverse syntax. 
-
-
-## Bonus Question: Use Climage Engine to pull the same data for the assignment, but updated with 2020/2021 data.
 
 
 

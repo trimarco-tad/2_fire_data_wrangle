@@ -18,10 +18,10 @@ knitr::opts_knit$set(root.dir='..')
 ```
 
 
-```{r dataread, warning=F,message=F}
+```{r dataread, warning=FALSE,message=FALSE}
 ####-----Reading in Data and Stacking it ----- ####
 #Reading in files
-files <- list.files('../data',full.names=T)
+files <- list.files('data',full.names=T)
 
 
 #Read in individual data files
@@ -73,7 +73,7 @@ ggplot(summer_only,aes(x=ndmi,y=ndvi,color=site)) +
   scale_color_few() + 
   theme(legend.position=c(0.8,0.8))
 ```
-
+There is a strong direct positive correlation between NDMI and NDVI. This isn't surprising, we should expect that time periods with more moisture have the greater potential to support vegetation. It is also worth noting that, unsurprisingly, NDVI is generally higher for the unburned region than the burned region, but the NDMI is also greater in the unburned region, indicating some soil moisture holding potential.
 
 ## Question 2 
 
@@ -106,7 +106,7 @@ ggplot(sum_2,aes(x=mean_ndsi,y=mean_ndvi,color=site.x)) +
 
 
 ```
-
+There is generally a poor correlation between 
 
 ## Q3
 
